@@ -1,10 +1,25 @@
+from django.urls import resolve
 from django.test import TestCase
+from django.http import HttpRequest
 
-class SmokeTest(TestCase):
-    '''тест на токсичность'''
+from lists.views import home_page
+
+
+class HomePageTest(TestCase):
+    '''тест домашней страницы'''
     
-    def test_bad_maths(self):
+    def test_root_url_resolves_to_home_pageviews(self):
         '''тест: неправильные математические расчеты'''
-        self.assertEqual(1 + 1, 3)
+        found = resolve('/')
+        self.assertEqual(found.func, home_page)
+    
+    def test_home_page_returns_correct_html(self):
+        '''тест: домашня страница возвращает правильный html'''
+        request = HttpRequest()
+        response = home_page(request)
+        html = response.content.decode('utf8')
+        self.assertTrue(html.startswith('<html>'))
+        self.assertIn('<title>To-Do lists</title>', html)
+        self.assertTrue(html.endswith('</html>'))
 
 # Create your tests here.
