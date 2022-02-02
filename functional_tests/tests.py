@@ -1,9 +1,9 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     '''тест нового посетителя'''
     
     def setUp(self):
@@ -19,7 +19,7 @@ class NewVisitorTest(unittest.TestCase):
         #Эдит слышала про крутое новое онлайн приложение со
         #список неотложных дел. Она решает оценить его
         #домашнюю страницу
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         
         #Она видит, что заголовок и шапка страницы говорят о
         #списках неотложных дел
@@ -55,7 +55,7 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn('1: Купить павлиньи перья', [row.text for row in rows])
-        self.assertIn('2: Сделать мушку из павлиньих перьев', [row.text for row in rows])
+        self.assertIn('1: Сделать мушку из павлиньих перьев', [row.text for row in rows])
         #Страница снова обновляется, и теперь показывает оба элемента на ее списке
 
         #Эдит интересно, запомнит ли сайт ее список. Далее она видит, что
@@ -66,6 +66,7 @@ class NewVisitorTest(unittest.TestCase):
 
         #Удовлетворенная она снова ложится спать
         self.fail('Закончить тест!')
+    
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
