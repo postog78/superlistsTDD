@@ -103,14 +103,14 @@ class NewVisitorTest(LiveServerTestCase):
         #Фрэнсис посещает домашнюю страницу. Нет никаких признаков списка Эдит
         self.browser.get(self.live_server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('Купить палиньи перья', page_text)
+        self.assertNotIn('Купить павлиньи перья', page_text)
         self.assertNotIn('Сделать мушку', page_text)
         
         #Фрэнсис начинает новый список, вводя новый элемент. Он менее интересен, чем список Эдит..
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Купить молоко')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table("2: Купить молоко")
+        self.wait_for_row_in_list_table("1: Купить молоко")
         
         #Фрэнсис получает уникальный URL адрес
         francis_list_url = self.browser.current_url
@@ -119,7 +119,7 @@ class NewVisitorTest(LiveServerTestCase):
         
         #Опять таки, нет ни следа от списка Эдит
         page_text = self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('Купить палиньи перья', page_text)
+        self.assertNotIn('Купить павлиньи перья', page_text)
         self.assertNotIn('Сделать мушку', page_text)
         
        
