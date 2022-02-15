@@ -30,7 +30,7 @@ class ListAndItemModelTest(TestCase):
         
         second_item = Item()
         second_item.text = 'The second list item'
-        second_item.list = list
+        second_item.list = list_
         second_item.save()
         
         saved_list = List.objects.all()
@@ -57,8 +57,9 @@ class ListViewTest(TestCase):
         
     def test_displays_all_list_items(self):
         '''тест: отображаются все элементы списка'''
-        Item.objects.create(text='itemey 1')
-        Item.objects.create(text='itemey 2')
+        list_ = List.objects.create()
+        Item.objects.create(text='itemey 1', list=list_)
+        Item.objects.create(text='itemey 2', list=list_)
         
         response = self.client.get('/lists/one_list/')
         
