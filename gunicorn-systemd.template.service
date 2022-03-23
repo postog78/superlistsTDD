@@ -1,0 +1,11 @@
+Unit]
+Description=Gunicorn server for ec2-44-202-218-68.compute-1.amazonaws.com
+
+[Service]
+Restart=on-failure
+User=ubuntu
+WorkingDirectory=/home/ubuntu/sites/SITENAME/source
+ExecStart=/home/ubuntu/sites/SITENAME/virtualenv/bin/gunicorn --bind unix:/tmp/ec2-44-202-218-68.compute-1.amazonaws.com.socket superlists.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
